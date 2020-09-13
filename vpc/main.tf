@@ -1,4 +1,3 @@
-# basic example for deploying a public, private and restricted subnet
 module "vpc" {
   source = "../modules/vpc/"
   
