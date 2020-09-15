@@ -14,11 +14,14 @@ module "vpc" {
   environment = local.environment
 }
 
-module "subnet" {
-  source = "../../modules/subnet/"
+module "public-subnet" {
+  source = "../../modules/public-subnet/"
   
   vpc_id = "${module.vpc.vpc_id}"
-  subnet_cidr = "10.0.0.0/16"
+  igw_id = "${module.vpc.igw_id}"
+
+  subnet_cidr = "10.0.0.0/24"
+  subnet_routes = ["0.0.0.0/0","172.0.0.0/16"]
 
   availability_zone = "${data.aws_region.current.name}a"
   
