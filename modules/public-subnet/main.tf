@@ -19,7 +19,7 @@ resource "aws_subnet" "public" {
   )}"
 }
 
-# create public route table
+# create route table that's publically accessible
 resource "aws_route_table" "public" {
   vpc_id = var.vpc_id
 
@@ -37,7 +37,7 @@ resource "aws_route_table" "public" {
 }
 
 # link subnet with route table
-resource "aws_route_table_association" "public_a" {
+resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
 }
