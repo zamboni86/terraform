@@ -14,7 +14,7 @@ resource "aws_subnet" "public" {
   tags = "${merge(
     local.tags,
     map(
-      "Name", "public-${var.availability_zone}"
+      "Name", "${var.environment}-public-${var.availability_zone}"
     )
   )}"
 }
@@ -23,21 +23,15 @@ resource "aws_subnet" "public" {
 resource "aws_route_table" "public" {
   vpc_id = var.vpc_id
 
-  dynamic "route" {
-    for_each = [for route in var.subnet_routes: {
-      cidr_block = route
-      gateway_id = var.igw_id
-    }]
-    content {
-      cidr_block = route.value.cidr_block
-      gateway_id = route.value.gateway_id
-    }
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = var.igw_id
   }
 
   tags = "${merge(
     local.tags,
     map(
-      "Name", "public-route table"
+      "Name", "${var.environment}-public-${var.availability_zone}-route-table"
     )
   )}"
 }
