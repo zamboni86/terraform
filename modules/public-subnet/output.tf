@@ -5,3 +5,7 @@ output "subnet_id" {
 output "subnet_cidr" {
   value = "${aws_subnet.public.cidr_block}"
 }
+
+output "igw_id" {
+  value = "${aws_internet_gateway.igw.id}"
+}

@@ -19,13 +19,25 @@ resource "aws_subnet" "public" {
   )}"
 }
 
+# create internet gatway (what allows the VPC to have access via the public internet)
+resource "aws_internet_gateway" "igw" {
+  vpc_id = var.vpc_id
+
+  tags = "${merge(
+    local.tags,
+    map(
+      "Name", "${var.environment}-igw"
+    )
+  )}"
+}
+
 # create route table that's publically accessible
 resource "aws_route_table" "public" {
   vpc_id = var.vpc_id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = var.igw_id
+    gateway_id = aws_internet_gateway.igw.id
   }
 
   tags = "${merge(

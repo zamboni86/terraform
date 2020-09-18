@@ -18,7 +18,6 @@ module "public-subnet" {
   source = "../../modules/public-subnet/"
   
   vpc_id = "${module.vpc.vpc_id}"
-  igw_id = "${module.vpc.igw_id}"
 
   subnet_cidr = "10.0.0.0/24"
 
