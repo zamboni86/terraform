@@ -43,7 +43,7 @@ resource "aws_route_table" "public" {
   tags = "${merge(
     local.tags,
     map(
-      "Name", "${var.environment}-public-${var.availability_zone}-route-table"
+      "Name", "${var.environment}-public-${var.availability_zone}"
     )
   )}"
 }
