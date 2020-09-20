@@ -26,6 +26,18 @@ module "public-subnet" {
   environment = local.environment
 }
 
+module "private-subnet" {
+  source = "../../modules/private-subnet/"
+  
+  vpc_id = "${module.vpc.vpc_id}"
+
+  subnet_cidr = "10.0.10.0/24"
+
+  availability_zone = "${data.aws_region.current.name}a"
+  
+  environment = local.environment
+}
+
 module "restricted-subnet" {
   source = "../../modules/restricted-subnet/"
   
