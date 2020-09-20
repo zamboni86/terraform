@@ -1,4 +1,4 @@
-# VPC
+# VPC with public subnet
 Creates the following AWS resources:
 1. Public subnet
 2. Internet gateway (IGW)
