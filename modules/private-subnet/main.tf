@@ -5,7 +5,7 @@ locals {
   }
 }
 
-# define public subnet
+# define private subnet
 resource "aws_subnet" "private" {
   vpc_id = var.vpc_id
   cidr_block = var.subnet_cidr
@@ -14,7 +14,7 @@ resource "aws_subnet" "private" {
   tags = "${merge(
     local.tags,
     map(
-      "Name", "${var.environment}-public-${var.availability_zone}"
+      "Name", "${var.environment}-private-${var.availability_zone}"
     )
   )}"
 }
