@@ -3,11 +3,11 @@ locals {
 }
 
 module "dlm-iam" {
-  source = "../../modules/dlm-iam/"
+  source = "../../modules/dlm/dlm-iam/"
 }
 
 module "dlm" {
-  source = "../../modules/dlm/"
+  source = "../../modules/dlm/dlm"
   execution_role_arn = module.dlm-iam.aws_role_arn
   name = "2 weeks of daily snapshots"
   interval = "24"
