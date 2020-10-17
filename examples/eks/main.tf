@@ -1,13 +1,20 @@
 locals {
   environment = "example"
+  cluster_name = "example"
 }
 
-module "eks-iam" {
-  source = "../../modules/eks/eks-iam/"
+module "my-cluster" {
+  source          = "terraform-aws-modules/eks/aws"
+  cluster_name    = "my-cluster"
+  cluster_version = "1.17"
+  subnets         = ["subnet-003bd54b5bb33cec6", "subnet-00bcbaa398cb71ace"]
+  vpc_id          = "vpc-0e0f2c2d2a6f5bfb8"
 
-  role_name = "${local.environment}-eks-role"
-}
-
-module "eks-cluster" {
-  source = "../../modules/eks/eks-cluster/"
+  worker_groups = [
+    {
+      instance_type = "t3.small"
+      asg_max_size  = 2
+      asg_desired_capacity = 2
+    }
+  ]
 }
