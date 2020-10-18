@@ -1,3 +1,18 @@
+# for now find subnets and VPCs based on CIDR
+data "aws_vpc" "selected" {
+  cidr_block = "172.31.0.0/16"
+}
+
+data "aws_subnet" "a" {
+  vpc_id = data.aws_vpc.selected.id
+  cidr_block = "172.31.0.0/20"
+}
+
+data "aws_subnet" "b" {
+  vpc_id = data.aws_vpc.selected.id
+  cidr_block = "172.31.16.0/20"
+}
+
 ########################################
 # cluster resource
 ########################################
@@ -33,7 +48,7 @@ resource "aws_eks_cluster" "eks" {
   role_arn = aws_iam_role.eks-cluster.arn
 
   vpc_config {
-    subnet_ids = ["subnet-0d4557868c7d7c53f", "subnet-0c7eabd0b511ffb7a"]
+    subnet_ids = [data.aws_subnet.a.id,data.aws_subnet.b.id]
   }
 
   depends_on = [
@@ -89,7 +104,7 @@ resource "aws_eks_node_group" "node" {
   cluster_name    = aws_eks_cluster.eks.name
   node_group_name = "example-node"
   node_role_arn   = aws_iam_role.node.arn
-  subnet_ids      = ["subnet-0d4557868c7d7c53f", "subnet-0c7eabd0b511ffb7a"]
+  subnet_ids = [data.aws_subnet.a.id,data.aws_subnet.b.id]
 
   scaling_config {
     desired_size = 1
