@@ -9,3 +9,7 @@ output "subnet_cidr" {
 output "igw_id" {
   value = "${aws_internet_gateway.igw.id}"
 }
+
+output "route_table" {
+  value = "${aws_route_table.public.id}"
+}
