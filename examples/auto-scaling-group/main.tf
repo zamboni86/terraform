@@ -27,6 +27,18 @@ resource "aws_security_group" "allow_http" {
   }
 }
 
+# get latest AMI
+data "aws_ami" "example" {
+  most_recent      = true
+
+  owners = ["591542846629"] #AWS
+
+  filter {
+      name   = "name"
+      values = ["amzn2-ami*"]
+  }
+}
+
 resource "aws_launch_template" "template" {
   name = "example-template"
 
